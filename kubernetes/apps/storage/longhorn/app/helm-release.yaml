@@ -48,7 +48,7 @@ spec:
           hajimari.io/targetBlank: "true"
           hajimari.io/info: "Storage"
         hosts:
-          - host: "longhorn-external.${SECRET_DOMAIN}"
+          - host: &host "{{ .Release.Name }}-external.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:
