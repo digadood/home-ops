@@ -71,7 +71,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
+        ingressClassName: external
         hosts:
           - host: &host "onepassword-connect.${SECRET_DOMAIN}"
             paths:
