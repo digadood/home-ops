@@ -38,22 +38,25 @@ spec:
       storageMinimalAvailablePercentage: 10
       StorageOverProvisioningPercentage: 120
     ingress:
-      enabled: true
-      className: external
-      host: &host "{{ .Release.Name }}-external.${SECRET_DOMAIN}"
-      tls:
-        - hosts:
-            - *host
-      tlsSecret: "longhorn-tls"
-      path: /
-      annotations:
-        cert-manager.io/cluster-issuer: "letsencrypt-production"
-        nginx.ingress.kubernetes.io/whitelist-source-range: "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
-        hajimari.io/icon: "cow"
-        hajimari.io/appName: "Longhorn"
-        hajimari.io/targetBlank: "true"
-        hajimari.io/info: "Storage"
-        external-dns.alpha.kubernetes.io/target: "longhorn.${SECRET_DOMAIN}"
+      main:
+        enabled: true
+        className: external
+        annotations:
+          external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+          hajimari.io/icon: "cow"
+          hajimari.io/appName: "Longhorn"
+          hajimari.io/targetBlank: "true"
+          hajimari.io/info: "Storage"
+        hosts:
+          - host: &host "{{ .Release.Name }}-external.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  name: main
+                  port: http
+        tls:
+          - hosts:
+              - *host
     metrics:
       serviceMonitor:
         enabled: true
