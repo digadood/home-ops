@@ -39,9 +39,11 @@ spec:
       StorageOverProvisioningPercentage: 120
     ingress:
       enabled: true
-      ingressClassName: external
-      host: "longhorn.${SECRET_DOMAIN}"
-      tls: true
+      className: external
+      host: &host "{{ .Release.Name }}-external.${SECRET_DOMAIN}"
+      tls:
+        - hosts:
+            - *host
       tlsSecret: "longhorn-tls"
       path: /
       annotations:
@@ -51,6 +53,7 @@ spec:
         hajimari.io/appName: "Longhorn"
         hajimari.io/targetBlank: "true"
         hajimari.io/info: "Storage"
+        external-dns.alpha.kubernetes.io/target: "longhorn.${SECRET_DOMAIN}"
     metrics:
       serviceMonitor:
         enabled: true
