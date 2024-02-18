@@ -16,13 +16,11 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
-    initContainers:
-      init-db:
-        image: ghcr.io/onedr0p/postgres-init:16
-        imagePullPolicy: IfNotPresent
-        envFrom:
-          - secretRef:
-              name: authentik-secret
+    strategy:
+      type: RollingUpdate
+    worker:
+      strategy:
+        type: RollingUpdate
     podAnnotations:
       secret.reloader.stakater.com/reload: authentik-secret
     ingress:
