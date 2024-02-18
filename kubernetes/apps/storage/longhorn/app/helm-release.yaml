@@ -37,12 +37,17 @@ spec:
       concurrentAutomaticEngineUpgradePerNodeLimit: 1
       storageMinimalAvailablePercentage: 10
       StorageOverProvisioningPercentage: 120
+    service:
+      main:
+        ports:
+          http:
+            port: *port
     ingress:
       main:
         enabled: true
         className: external
         annotations:
-          external-dns.alpha.kubernetes.io/target: "longhorn.${SECRET_DOMAIN}"
+          external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
           hajimari.io/icon: "cow"
           hajimari.io/appName: "Longhorn"
           hajimari.io/targetBlank: "true"
