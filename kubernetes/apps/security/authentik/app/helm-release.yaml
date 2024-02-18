@@ -50,9 +50,9 @@ spec:
       enabled: false
     prometheus:
       rules:
-        create: true
+        create: false
       serviceMonitor:
-        create: true
+        create: false
     authentik:
       outposts:
         docker_image_base: ghcr.io/goauthentik/%(type)s:%(version)s
