@@ -15,3 +15,4 @@ resources:
   - ./longhorn-charts.yaml
   - ./bitnami.yaml
   - ./chart-authentik.yaml
+  - ./cloudnative-pg.yaml
