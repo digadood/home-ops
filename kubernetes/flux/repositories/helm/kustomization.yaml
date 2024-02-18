@@ -13,5 +13,5 @@ resources:
   - ./stakater.yaml
   - ./external-secrets.yaml
   - ./longhorn-charts.yaml
-  - ./chart-bitami.yaml
+  - ./bitnami.yaml
   - ./chart-authentik.yaml
