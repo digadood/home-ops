@@ -66,4 +66,4 @@ spec:
     postgresql:
       enabled: false
     redis:
-       host: authentik-redis.security.svc.cluster.local
+      host: authentik-redis.security.svc.cluster.local
