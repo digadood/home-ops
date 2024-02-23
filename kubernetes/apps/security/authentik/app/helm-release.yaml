@@ -63,6 +63,8 @@ spec:
       # performance data to sentry.beryju.org, and is fully opt-in
       error_reporting:
         enabled: true
+      outposts:
+        container_image_base: ghcr.io/goauthentik/%(type)s:%(version)s
 
     postgresql:
       enabled: false
