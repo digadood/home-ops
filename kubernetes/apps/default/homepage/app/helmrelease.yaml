@@ -106,9 +106,9 @@ spec:
         tls:
           - hosts:
               - homepage-config.${SECRET_DOMAIN}
-      persistence:
-        config:
-          enabled: true
-          existingClaim: homepage-data
-          globalMounts:
-            - path: /config
+    persistence:
+      config:
+        enabled: true
+        existingClaim: homepage-data
+        globalMounts:
+          - path: /config
