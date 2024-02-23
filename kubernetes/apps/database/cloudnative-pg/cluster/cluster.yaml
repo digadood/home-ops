@@ -14,10 +14,14 @@ spec:
   superuserSecret:
     name: cloudnative-pg-secret
   enableSuperuserAccess: true
-  # Note: Bootstrap is needed when recovering from an existing cnpg cluster
-  # bootstrap:
-  #   recovery:
-  #     source: &previousCluster cnpg16-v7
+  bootstrap:
+    initdb:
+      dataChecksums: true
+      database: authentik
+      owner: authentik
+      encoding: "UTF8"
+      localeCollate: en_US.utf8
+      localeCType: en_US.utf8
   postgresql:
     parameters:
       max_connections: "600"
