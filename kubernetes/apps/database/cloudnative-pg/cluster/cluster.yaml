@@ -10,7 +10,7 @@ spec:
   primaryUpdateStrategy: unsupervised
   storage:
     size: 20Gi
-    storageClass: local-path
+    storageClass: local-hostpath
   superuserSecret:
     name: cloudnative-pg-secret
   enableSuperuserAccess: true
@@ -28,7 +28,7 @@ spec:
       memory: "2Gi"
       cpu: "500m"
     limits:
-      memory: "4Gi"
+      memory: "4Gi"flu
   monitoring:
     enablePodMonitor: true
     # Ref: https://github.com/cloudnative-pg/cloudnative-pg/issues/2501
