@@ -70,6 +70,7 @@ spec:
         enabled: true
         ingressClassName: external
         annotations:
+          external-dns.home.arpa/enabled: 'true'
           external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
           nginx.ingress.kubernetes.io/auth-url: https://authentik-server.security.svc.cluster.local/outpost.goauthentik.io/auth/nginx
           nginx.ingress.kubernetes.io/auth-signin: https://authentik.${SECRET_DOMAIN}/outpost.goauthentik.io/start?rd=$escaped_request_uri
@@ -91,6 +92,7 @@ spec:
         enabled: true
         ingressClassName: external
         annotations:
+          external-dns.home.arpa/enabled: 'true'
           external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
           nginx.ingress.kubernetes.io/auth-url: https://authentik-server.security.svc.cluster.local/outpost.goauthentik.io/auth/nginx
           nginx.ingress.kubernetes.io/auth-signin: https://authentik.${SECRET_DOMAIN}/outpost.goauthentik.io/start?rd=$escaped_request_uri
