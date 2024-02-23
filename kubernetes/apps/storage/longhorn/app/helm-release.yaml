@@ -41,6 +41,7 @@ spec:
       enabled: true
       ingressClassName: external
       annotations:
+        cert-manager.io/cluster-issuer: "letsencrypt-production"
         external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
         nginx.ingress.kubernetes.io/auth-url: |-
           http://authentik-server.security.svc.cluster.local/outpost.goauthentik.io/auth/nginx
