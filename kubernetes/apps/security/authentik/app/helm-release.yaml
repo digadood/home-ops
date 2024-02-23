@@ -63,11 +63,6 @@ spec:
       # performance data to sentry.beryju.org, and is fully opt-in
       error_reporting:
         enabled: true
-      outposts:
-        docker_image_base: ghcr.io/goauthentik/%(type)s:%(version)s
-      redis:
-        host: "authentik-redis.security.svc.cluster.local"
-        password:
 
     postgresql:
       enabled: false
