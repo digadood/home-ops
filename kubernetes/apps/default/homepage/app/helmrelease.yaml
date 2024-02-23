@@ -4,9 +4,8 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: homepage
-  namespace: default
+  namespace: homepage
 spec:
-  interval: 30m
   chart:
     spec:
       chart: app-template
@@ -14,24 +13,23 @@ spec:
       reconcileStrategy: ChartVersion
       sourceRef:
         kind: HelmRepository
-        name: bjw-s
         namespace: flux-system
-  maxHistory: 2
-  install:
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
-  uninstall:
-    keepHistory: false
+        name: bjw-s
+  interval: 1h
+  driftDetection:
+    mode: enabled
   values:
-    image:
-      repository: ghcr.io/gethomepage/homepage
-      tag: v0.8.8
-    env:
-      TZ: "${TIMEZONE}"
+    controllers:
+      main:
+        strategy: RollingUpdate
+        containers:
+          main:
+            image:
+              repository: ghcr.io/gethomepage/homepage
+              tag: v0.8.8@sha256:0f066a6d6fba3a810a85aa79a483302b0fee21139b67adaeb245edae5051f3e8
+              pullPolicy: IfNotPresent
+            env:
+              TZ: Europe/London
     service:
       main:
         ports:
