@@ -101,12 +101,12 @@ spec:
             proxy_set_header X-Forwarded-Host $http_host;
         hosts:
           - host: homepage-config.${SECRET_DOMAIN}
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  name: code
-                  port: http
+        paths:
+        - /
+        pathType: Prefix
+        service:
+          name: code
+          port: http
         tls:
           - hosts:
               - homepage-config.${SECRET_DOMAIN}
