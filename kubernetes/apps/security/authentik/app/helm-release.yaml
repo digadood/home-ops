@@ -8,52 +8,62 @@ spec:
   interval: 5m
   chart:
     spec:
+      # renovate: registryUrl=https://charts.goauthentik.io
       chart: authentik
-      version: 2023.10.7
+      version: 2024.2.1
       sourceRef:
         kind: HelmRepository
         name: authentik
         namespace: flux-system
       interval: 5m
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
   values:
-    strategy:
-      type: RollingUpdate
-    worker:
-      strategy:
-        type: RollingUpdate
-    podAnnotations:
-      secret.reloader.stakater.com/reload: authentik-secret
-    ingress:
-      enabled: true
-      ingressClassName: external
-      annotations:
-        external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
-      hosts:
-        - host: &host authentik.${SECRET_DOMAIN}
-          paths:
-            - path: /
-              pathType: Prefix
-      tls:
-        - hosts:
-            - *host
-          secretName: *host
-    envFrom:
-      - secretRef:
-          name: authentik-secret
+    global:
+      image:
+        repository: ghcr.io/goauthentik/server
+        tag: 2024.2.1
+      envFrom:
+        - secretRef:
+            name: authentik-secret
+      podAnnotations:
+        secret.reloader.stakater.com/reload: authentik-secret
+
+    server:
+      initContainers:
+        init-db:
+        - name: 01-db-init
+          image: ghcr.io/onedr0p/postgres-init:16
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - secretRef:
+                name: authentik-secret
+      ingress:
+        enabled: true
+        ingressClassName: nginx
+        annotations:
+          external-dns.home.arpa/enabled: 'true'
+        hosts:
+          - authentik.${SECRET_DOMAIN}
+        paths:
+          - /
+        pathType: Prefix
+        tls:
+          - hosts:
+              - authentik.${SECRET_DOMAIN}
+
+    authentik:
+      # This sends anonymous usage-data, stack traces on errors and
+      # performance data to sentry.beryju.org, and is fully opt-in
+      error_reporting:
+        enabled: true
+
     postgresql:
       enabled: false
     redis:
       enabled: false
-    geoip:
-      enabled: false
-    prometheus:
-      rules:
-        create: false
-      serviceMonitor:
-        create: false
-    authentik:
-      outposts:
-        docker_image_base: ghcr.io/goauthentik/%(type)s:%(version)s
-      redis:
-        host: "authentik-redis.security.svc.cluster.local"
-        password: ""
