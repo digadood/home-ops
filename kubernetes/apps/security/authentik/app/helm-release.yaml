@@ -45,9 +45,10 @@ spec:
                 name: authentik-secret
       ingress:
         enabled: true
-        ingressClassName: nginx
+        ingressClassName: external
         annotations:
           external-dns.home.arpa/enabled: 'true'
+          external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
         hosts:
           - authentik.${SECRET_DOMAIN}
         paths:
@@ -62,8 +63,13 @@ spec:
       # performance data to sentry.beryju.org, and is fully opt-in
       error_reporting:
         enabled: true
+      outposts:
+        docker_image_base: ghcr.io/goauthentik/%(type)s:%(version)s
+      redis:
+        host: "authentik-redis.security.svc.cluster.local"
+        password:
 
     postgresql:
       enabled: false
     redis:
-      host: authentik-redis.security.svc.cluster.local
+      enabled: false
