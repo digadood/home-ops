@@ -101,11 +101,11 @@ spec:
         hosts:
           - host: homepage-config.${SECRET_DOMAIN}
             paths:
-            - /
-            pathType: Prefix
-            service:
-              name: code
-              port: http
+              - path: /
+                pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - homepage-config.${SECRET_DOMAIN}
