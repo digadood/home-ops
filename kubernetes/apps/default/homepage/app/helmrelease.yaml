@@ -60,7 +60,7 @@ spec:
             port: 3000
       code:
         type: ClusterIP
-        controller: main
+        #controller: main
         ports:
           http:
             port: 8081
