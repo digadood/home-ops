@@ -60,7 +60,7 @@ spec:
             port: 3000
       code:
         type: ClusterIP
-        #controller: main
+        controller: main
         ports:
           http:
             port: 8081
@@ -104,7 +104,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  name: code
                   port: http
         tls:
           - hosts:
